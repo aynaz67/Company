@@ -12,10 +12,27 @@ namespace CompanyWeb.Controllers
         {
             _villaService = villaService;
         }
+
         public async Task<IActionResult> Index()
         {
             var villas = await _villaService.GetVillasAsync();
             return View(villas);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Villa VillaEntity)
+        {
+            if (ModelState.IsValid)
+            {
+                await _villaService.AddVillasAsync(VillaEntity);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         [HttpGet("{id}")]
@@ -25,12 +42,7 @@ namespace CompanyWeb.Controllers
             return Ok(villa);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddVillas(Villa VillaEntity)
-        {
-            await _villaService.AddVillasAsync(VillaEntity);
-            return View();
-        }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVillas(Villa VillaEntity)

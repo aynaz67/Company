@@ -1,0 +1,31 @@
+﻿@model Company.Domain.Entity.Villa
+<h2>Create Villa</h2>
+<div>
+    <form asp-action="Create" method="post">
+        <div>
+            <div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name" class="alert-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Description"></label>
+                <input asp-for="Description" />
+            
+            </div>
+            <div>
+                <label asp-for="CreateDate"></label>
+                <input asp-for="CreateDate" />
+                <span asp-validation-for="CreateDate" class="alert-danger"></span>
+            </div>
+            <div>
+                <label asp-for="UpdateDate"></label>
+                <input asp-for="UpdateDate" />
+            </div>
+        </div>
+        <div>
+            <button type="submit">Create</button>
+            <a asp-controller="Villa" asp-action="Index"> Cancel</a>
+        </div>
+    </form>
+</div>

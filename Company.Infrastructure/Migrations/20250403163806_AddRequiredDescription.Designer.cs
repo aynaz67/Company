@@ -4,6 +4,7 @@ using Company.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250403163806_AddRequiredDescription")]
+    partial class AddRequiredDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +33,7 @@ namespace Company.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -51,14 +54,14 @@ namespace Company.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2025, 4, 3, 17, 48, 52, 498, DateTimeKind.Local).AddTicks(9990),
+                            CreateDate = new DateTime(2025, 4, 3, 17, 38, 6, 596, DateTimeKind.Local).AddTicks(2605),
                             Description = "It's me",
                             Name = "Aynaz"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2025, 4, 3, 17, 48, 52, 499, DateTimeKind.Local).AddTicks(56),
+                            CreateDate = new DateTime(2025, 4, 3, 17, 38, 6, 596, DateTimeKind.Local).AddTicks(2672),
                             Description = "It's my sister",
                             Name = "Elnaz"
                         });

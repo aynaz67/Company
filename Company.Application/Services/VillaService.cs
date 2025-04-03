@@ -18,7 +18,7 @@ namespace Company.Application.Services
             _villaRepository = productRepository;
         }
 
-        public async Task<Villa> GetVillasByIdAsync(int id)
+        public async Task<Villa?> GetVillasByIdAsync(int id)
         {
             return await _villaRepository.GetByIdAsync(id);
         }
@@ -30,18 +30,29 @@ namespace Company.Application.Services
 
         public async Task AddVillasAsync(Villa entity)
         {
-            _villaRepository.AddAsync(entity);
-
-
+            await _villaRepository.AddAsync(entity);
+            await _villaRepository.SaveChangesAsync();
         }
-        public async Task UpdateVillasAsync(Villa entity)
+        public async Task<bool> UpdateVillasAsync(Villa entity)
         {
-            _villaRepository.UpdateAsync(entity);
+            var existingVilla = await _villaRepository.GetByIdAsync(entity.Id);
+            if (existingVilla == null)
+                return false;
+
+            await _villaRepository.UpdateAsync(entity);
+            await _villaRepository.SaveChangesAsync();
+            return true;
         }
 
-        public async Task DeleteVillasAsync(int id)
+        public async Task<bool> DeleteVillasAsync(int id)
         {
-            _villaRepository.DeleteAsync(id);
+            var existingVilla = await _villaRepository.GetByIdAsync(id);
+            if (existingVilla == null)
+                return false;
+
+            await _villaRepository.DeleteAsync(existingVilla);
+            await _villaRepository.SaveChangesAsync();
+            return true;
         }
 
     }
