@@ -1,4 +1,5 @@
 ﻿using Company.Application.Services;
+using Company.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyWeb.Controllers
@@ -11,16 +12,40 @@ namespace CompanyWeb.Controllers
         {
             _villaService = villaService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var villas = await _villaService.GetVillasAsync();
+            return View(villas);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVillasById(int id)
+        {
+            var villa = await _villaService.GetVillasByIdAsync(id);
+            return Ok(villa);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVillas(Villa VillaEntity)
+        {
+            await _villaService.AddVillasAsync(VillaEntity);
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllVillas()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVillas(Villa VillaEntity)
         {
-            var products = await _villaService.GetProductsAsync();
-            return Ok(products);
-        }     
+            await _villaService.UpdateVillasAsync(VillaEntity);
+            return View();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVillas(int id)
+        {
+            await _villaService.DeleteVillasAsync(id);
+            return View();
+        }
+
+
     }
 }

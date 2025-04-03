@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Company.Domain.Entity.Villa>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Create Date
+            </th>
+            <th>
+                Update Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td>@obj.Name</td>
+                <td>@obj.Description</td>
+                <td>@obj.CreateDate</td>
+                <td>@obj.UpdateDate</td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
