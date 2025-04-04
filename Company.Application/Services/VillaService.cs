@@ -38,8 +38,11 @@ namespace Company.Application.Services
             var existingVilla = await _villaRepository.GetByIdAsync(entity.Id);
             if (existingVilla == null)
                 return false;
-
-            await _villaRepository.UpdateAsync(entity);
+            existingVilla.Name = entity.Name;
+            existingVilla.Description = entity.Description;
+            existingVilla.CreateDate = entity.CreateDate;
+            existingVilla.UpdateDate = entity.UpdateDate;
+   
             await _villaRepository.SaveChangesAsync();
             return true;
         }

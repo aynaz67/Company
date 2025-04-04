@@ -50,14 +50,16 @@ namespace Company.Infrastructure.Repositories
             await _dbSet.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(T entity)
+        public Task UpdateAsync(T entity)
         {
-         _dbSet.Update(entity);
+            _dbSet.Update(entity);
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(T entity)
+        public Task DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
+            return Task.CompletedTask;
         }
         public async Task<int> SaveChangesAsync()
         {

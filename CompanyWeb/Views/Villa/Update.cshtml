@@ -1,0 +1,24 @@
+﻿@model Company.Domain.Entity.Villa
+<h2>Edit Villa</h2>
+<div>
+    <form method="post" asp-action="Update">
+        <input asp-for="Id" type="hidden"/>
+        <div>
+            <label asp-for="Name" ></label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Description"></label>
+            <input asp-for="Description"/>
+        </div>
+        <div>
+            <label asp-for="CreateDate"></label>
+            <input asp-for="CreateDate"/>
+        </div>
+        <div>
+            <label asp-for="UpdateDate"></label>
+            <input asp-for="UpdateDate" />
+        </div>
+        <button type="submit">Update</button>
+    </form>
+</div>

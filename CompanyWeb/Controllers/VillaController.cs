@@ -35,27 +35,24 @@ namespace CompanyWeb.Controllers
             return View();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetVillasById(int id)
+        public async Task<IActionResult> Update(int villaId)
         {
-            var villa = await _villaService.GetVillasByIdAsync(id);
-            return Ok(villa);
+            var villa = await _villaService.GetVillasByIdAsync(villaId);
+            return View(villa);
         }
 
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVillas(Villa VillaEntity)
+        [HttpPost]
+        public async Task<IActionResult> Update(Villa VillaEntity)
         {
-            await _villaService.UpdateVillasAsync(VillaEntity);
+          var result=  await _villaService.UpdateVillasAsync(VillaEntity);
             return View();
-        }
+        }   
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVillas(int id)
+        
+        public async Task<IActionResult> Delete(int villaId)
         {
-            await _villaService.DeleteVillasAsync(id);
-            return View();
+            await _villaService.DeleteVillasAsync(villaId);
+            return RedirectToAction("Index");
         }
 
 

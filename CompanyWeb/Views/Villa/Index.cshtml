@@ -18,6 +18,12 @@
                 <td>@obj.Description</td>
                 <td>@obj.CreateDate</td>
                 <td>@obj.UpdateDate</td>
+                <td>
+                    <a asp-controller="Villa" asp-action="Update" asp-route-villaId="@obj.Id">EDIT</a>
+                </td>
+                <td>
+                    <a asp-controller="Villa" asp-action="Delete" asp-route-villaId="@obj.Id">Delete</a>
+                </td>
             </tr>
         }
         
