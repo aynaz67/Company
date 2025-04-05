@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Company.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,15 +9,10 @@ using System.Threading.Tasks;
 
 namespace Company.Domain.Entity
 {
-    public class Villa
+    public class Villa : BaseDomainEntity
     {
         public int Id { get; set; }
-        public required string Name { get; set; }
+        public string Name { get; set; }
         public string? Description { get; set; }
-        //log
-        [Display(Name ="Create Date")]
-        public required DateTime CreateDate { get; set; }
-        [Display(Name ="Update Data")]
-        public DateTime? UpdateDate { get; set; }
     }
 }
