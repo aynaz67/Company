@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace Company.Infrastructure.Data
 {
-    public class ApplicationDbContext :DbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-        
+
         }
 
         public DbSet<Villa> Villas { get; set; }
         //initilising tables
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Villa>().HasData( 
-            new Villa 
-            { 
-                Id=1,
-                Name="Aynaz",
-                Description="It's me",
+            modelBuilder.Entity<Villa>().HasData(
+            new Villa
+            {
+                Id = 1,
+                Name = "Aynaz",
+                Description = "It's me",
                 CreateDate = DateTime.Now,
-                
+
             },
               new Villa
               {
@@ -36,7 +36,11 @@ namespace Company.Infrastructure.Data
                   CreateDate = DateTime.Now,
               }
            );
-  
+
+            modelBuilder.ApplyConfiguration(new Configurations.VillaConfiguration());
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

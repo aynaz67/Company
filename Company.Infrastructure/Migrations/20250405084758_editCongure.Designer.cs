@@ -4,6 +4,7 @@ using Company.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250405084758_editCongure")]
+    partial class editCongure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +39,7 @@ namespace Company.Infrastructure.Migrations
                         .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -56,18 +60,18 @@ namespace Company.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2025, 4, 5, 10, 4, 53, 252, DateTimeKind.Local).AddTicks(8507),
+                            CreateDate = new DateTime(2025, 4, 5, 9, 47, 57, 827, DateTimeKind.Local).AddTicks(802),
                             Description = "It's me",
                             Name = "Aynaz",
-                            UpdateDate = new DateTime(2025, 4, 5, 9, 4, 53, 252, DateTimeKind.Utc).AddTicks(8499)
+                            UpdateDate = new DateTime(2025, 4, 5, 8, 47, 57, 827, DateTimeKind.Utc).AddTicks(795)
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2025, 4, 5, 10, 4, 53, 252, DateTimeKind.Local).AddTicks(8588),
+                            CreateDate = new DateTime(2025, 4, 5, 9, 47, 57, 827, DateTimeKind.Local).AddTicks(870),
                             Description = "It's my sister",
                             Name = "Elnaz",
-                            UpdateDate = new DateTime(2025, 4, 5, 9, 4, 53, 252, DateTimeKind.Utc).AddTicks(8586)
+                            UpdateDate = new DateTime(2025, 4, 5, 8, 47, 57, 827, DateTimeKind.Utc).AddTicks(869)
                         });
                 });
 #pragma warning restore 612, 618
