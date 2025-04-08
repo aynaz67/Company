@@ -1,3 +1,4 @@
+using Company.Application.Mappings;
 using Company.Application.Services;
 using Company.Application.Services.Interfaces;
 using Company.Infrastructure.Data;
@@ -11,7 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<VillaService>();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Company.Domain.Entity.Villa>
+﻿@model IEnumerable<Company.Application.DTOs.VillaDto>
 <a asp-controller="Villa" asp-action="Create">Create New Villa</a>
 
 <table>
@@ -6,8 +6,9 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Create Date</th>
-            <th>Update Date</th>
+           @*  <th>Create Date</th>
+            <th>Update Date</th> *@
+            <th>Operations</th>
         </tr>
     </thead>
     <tbody>
@@ -16,8 +17,8 @@
             <tr>
                 <td >@obj.Name</td>
                 <td>@obj.Description</td>
-                <td>@obj.CreateDate</td>
-                <td>@obj.UpdateDate</td>
+            @*     <td>@obj.CreateDate</td>
+                <td>@obj.UpdateDate</td> *@
                 <td>
                     <a asp-controller="Villa" asp-action="Update" asp-route-villaId="@obj.Id">EDIT</a>
                 </td>

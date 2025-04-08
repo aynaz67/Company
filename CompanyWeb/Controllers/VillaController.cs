@@ -1,5 +1,5 @@
 ﻿using Company.Application.Services;
-using Company.Domain.Entity;
+using Company.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyWeb.Controllers
@@ -17,6 +17,7 @@ namespace CompanyWeb.Controllers
         {
             var villas = await _villaService.GetVillasAsync();
             return View(villas);
+
         }
 
         public async Task<IActionResult> Create()
@@ -25,11 +26,11 @@ namespace CompanyWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Villa VillaEntity)
+        public async Task<IActionResult> Create(CreateUpdateVillaDto dto)
         {
             if (ModelState.IsValid)
             {
-                await _villaService.AddVillasAsync(VillaEntity);
+                await _villaService.AddVillasAsync(dto);
                 return RedirectToAction("Index");
             }
             return View();
@@ -38,23 +39,41 @@ namespace CompanyWeb.Controllers
         public async Task<IActionResult> Update(int villaId)
         {
             var villa = await _villaService.GetVillasByIdAsync(villaId);
-            return View(villa);
+            if (villa == null)
+                return NotFound();
+
+            var villaDto = new VillaDto
+            {
+                Name = villa.Name,
+                Description = villa.Description,
+                Id= villa.Id,
+            };
+
+            return View(villaDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(Villa VillaEntity)
+        public async Task<IActionResult> Update(VillaDto dto)
         {
-          var result=  await _villaService.UpdateVillasAsync(VillaEntity);
-            return View();
-        }   
+            if (ModelState.IsValid)
+            {
+                var result = await _villaService.UpdateVillasAsync(dto);
+                if (result)
+                    return RedirectToAction("Index");
 
-        
-        public async Task<IActionResult> Delete(int villaId)
-        {
-            await _villaService.DeleteVillasAsync(villaId);
-            return RedirectToAction("Index");
+                return NotFound();
+            }
+            return View(dto);
         }
 
 
+        public async Task<IActionResult> Delete(int villaId)
+        {
+            var result = await _villaService.DeleteVillasAsync(villaId);
+            if (!result)
+                return NotFound();
+
+            return RedirectToAction("Index");
+        }
     }
 }

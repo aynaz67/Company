@@ -1,48 +1,75 @@
 ﻿using Company.Application.Services.Interfaces;
 using Company.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+using Company.Application.DTOs;
+using AutoMapper;
 
 namespace Company.Application.Services
 {
     public class VillaService
     {
         private readonly IRepository<Villa> _villaRepository;
+        private readonly IMapper _mapper;
 
-        public VillaService(IRepository<Villa> productRepository)
+        public VillaService(IRepository<Villa> villaRepository, IMapper mapper)
         {
-            _villaRepository = productRepository;
+            _villaRepository = villaRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Villa?> GetVillasByIdAsync(int id)
+        public async Task<VillaDto?> GetVillasByIdAsync(int id)
         {
-            return await _villaRepository.GetByIdAsync(id);
+            var villa = await _villaRepository.GetByIdAsync(id);
+            return _mapper.Map<VillaDto>(villa);
+
+            //return new VillaDto
+            //{
+            //    Id = villa.Id,
+            //    Name = villa.Name,
+            //    Description = villa.Description
+            //};
         }
 
-        public async Task<IEnumerable<Villa>> GetVillasAsync()
+        public async Task<IEnumerable<VillaDto>> GetVillasAsync()
         {
-            return await _villaRepository.GetAllAsync();
+            var villas = await _villaRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<VillaDto>>(villas);
+
+            //return villas.Select(v => new VillaDto
+            //{
+            //    Id = v.Id,
+            //    Name = v.Name,
+            //    Description = v.Description
+            //});
         }
 
-        public async Task AddVillasAsync(Villa entity)
+        public async Task AddVillasAsync(CreateUpdateVillaDto dto)
         {
-            await _villaRepository.AddAsync(entity);
+            var villa = _mapper.Map<Villa>(dto);
+            //var entity = new Villa
+            //{
+            //    Name = dto.Name,
+            //    Description = dto.Description
+            //};
+            await _villaRepository.AddAsync(villa);
             await _villaRepository.SaveChangesAsync();
         }
-        public async Task<bool> UpdateVillasAsync(Villa entity)
+
+        public async Task<bool> UpdateVillasAsync(VillaDto dto)
         {
-            var existingVilla = await _villaRepository.GetByIdAsync(entity.Id);
+            var existingVilla = await _villaRepository.GetByIdAsync(dto.Id);
             if (existingVilla == null)
                 return false;
-            existingVilla.Name = entity.Name;
-            existingVilla.Description = entity.Description;
-            existingVilla.CreateDate = entity.CreateDate;
-            existingVilla.UpdateDate = entity.UpdateDate;
-   
+
+            //existingVilla.Name = dto.Name;
+            //existingVilla.Description = dto.Description;
+            //existingVilla.UpdateDate = dto.UpdateDate;
+
+            //await _villaRepository.SaveChangesAsync();
+            //return true;
+
+            _mapper.Map(dto, existingVilla); // Map updated fields into existing entity
+            existingVilla.UpdateDate = DateTime.UtcNow;
+
             await _villaRepository.SaveChangesAsync();
             return true;
         }
