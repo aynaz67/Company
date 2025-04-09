@@ -26,14 +26,15 @@ namespace CompanyWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // Prevent CSRF attacks
         public async Task<IActionResult> Create(CreateUpdateVillaDto dto)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 await _villaService.AddVillasAsync(dto);
                 return RedirectToAction("Index");
-            }
-            return View();
+            //}
+            //return View(dto);
         }
 
         public async Task<IActionResult> Update(int villaId)
