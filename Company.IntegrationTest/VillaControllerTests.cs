@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Company.Domain.Entity;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Linq;
 using System.Net;
@@ -22,7 +23,10 @@ namespace Company.IntegrationTest
             var formData = new FormUrlEncodedContent(new[]
             {
         new KeyValuePair<string, string>("Name", "Test Villa"),
-        new KeyValuePair<string, string>("Description", "Integration test")
+        new KeyValuePair<string, string>("Description", "Integration test"),
+        new KeyValuePair<string, string>("CreateDate", "Integration test"),
+        new KeyValuePair<string, string>("UpdateDate", "Integration test")
+
             });
 
             // Act
@@ -52,5 +56,31 @@ namespace Company.IntegrationTest
             Assert.Contains("<form", html); // crude check to see if view rendered
         }
 
+        [Fact]
+        public async Task Post_Edit_Villa_Returns_Redirect()
+        {
+            // Arrange
+            //var villaId = 1003;
+            var formData = new Dictionary<string, string>
+        {
+           // { "Id", villaId.ToString() },
+            { "Id", "1003" },
+            { "Name", "Updated Villa Name" },
+            { "Description", "Updated Description" },
+            { "CreateDate", DateTime.UtcNow.ToString("o") }, // ISO 8601 format
+            { "UpdateDate", DateTime.UtcNow.ToString("o") }
+        };
+            var content = new FormUrlEncodedContent(formData);
+
+            // Act
+            //   var response = await _client.PostAsync($"/Villa/Update/{villaId}", content);
+            var response = await _client.PostAsync("/Villa/Update/1003", content);
+
+            Console.WriteLine($"Redirect Location: {response.Headers.Location}");
+            Console.WriteLine($"Response Status Code: {response.StatusCode}");
+            // Assert
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+           // Assert.Equal("/Villa/Index", response.Headers.Location?.ToString());
+        }
     }
 }

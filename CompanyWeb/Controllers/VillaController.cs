@@ -29,12 +29,12 @@ namespace CompanyWeb.Controllers
         [ValidateAntiForgeryToken] // Prevent CSRF attacks
         public async Task<IActionResult> Create(CreateUpdateVillaDto dto)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 await _villaService.AddVillasAsync(dto);
                 return RedirectToAction("Index");
-            //}
-            //return View(dto);
+            }
+            return View(dto);
         }
 
         public async Task<IActionResult> Update(int villaId)
@@ -47,7 +47,7 @@ namespace CompanyWeb.Controllers
             {
                 Name = villa.Name,
                 Description = villa.Description,
-                Id= villa.Id,
+                Id = villa.Id,
             };
 
             return View(villaDto);
