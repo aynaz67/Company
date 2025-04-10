@@ -1,9 +1,11 @@
 ﻿using Company.Application.Services;
 using Company.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyWeb.Controllers
 {
+    [Authorize]
     public class VillaController : Controller
     {
         private readonly VillaService _villaService;
