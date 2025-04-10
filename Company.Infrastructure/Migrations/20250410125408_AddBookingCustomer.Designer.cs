@@ -4,6 +4,7 @@ using Company.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250410125408_AddBookingCustomer")]
+    partial class AddBookingCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Company.Infrastructure.Migrations
                     b.Property<DateTime>("BookingDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("CreateDate")
+                    b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
@@ -45,7 +48,7 @@ namespace Company.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("VillaId")
@@ -68,7 +71,7 @@ namespace Company.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreateDate")
+                    b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -91,7 +94,7 @@ namespace Company.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -107,7 +110,7 @@ namespace Company.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreateDate")
+                    b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -120,7 +123,7 @@ namespace Company.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -133,18 +136,18 @@ namespace Company.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2025, 4, 10, 15, 58, 3, 83, DateTimeKind.Local).AddTicks(8314),
+                            CreateDate = new DateTime(2025, 4, 10, 13, 54, 8, 742, DateTimeKind.Local).AddTicks(4162),
                             Description = "It's me",
                             Name = "Aynaz",
-                            UpdateDate = new DateTime(2025, 4, 10, 14, 58, 3, 83, DateTimeKind.Utc).AddTicks(8307)
+                            UpdateDate = new DateTime(2025, 4, 10, 12, 54, 8, 742, DateTimeKind.Utc).AddTicks(4152)
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2025, 4, 10, 15, 58, 3, 83, DateTimeKind.Local).AddTicks(8384),
+                            CreateDate = new DateTime(2025, 4, 10, 13, 54, 8, 742, DateTimeKind.Local).AddTicks(4221),
                             Description = "It's my sister",
                             Name = "Elnaz",
-                            UpdateDate = new DateTime(2025, 4, 10, 14, 58, 3, 83, DateTimeKind.Utc).AddTicks(8382)
+                            UpdateDate = new DateTime(2025, 4, 10, 12, 54, 8, 742, DateTimeKind.Utc).AddTicks(4220)
                         });
                 });
 
