@@ -35,7 +35,7 @@ Options.TokenValidationParameters = new TokenValidationParameters
     IssuerSigningKey = new SymmetricSecurityKey(
         Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 });
-builder.Services.AddSingleton<IUserRepository, UserRepository>(); // since we use static repository we can not use AddScope
+builder.Services.AddScoped<IUserRepository, UserRepository>(); // since we use static repository we can not use AddScope
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

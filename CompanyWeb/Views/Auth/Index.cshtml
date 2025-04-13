@@ -1,0 +1,17 @@
+﻿@model Company.Application.DTOs.LoginRequestDto
+<h2>User Login</h2>
+<div>
+    <form method="post" asp-action="LoginAsync">
+
+        <div>
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" />
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
