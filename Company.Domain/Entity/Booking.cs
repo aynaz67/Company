@@ -27,7 +27,7 @@ namespace Company.Domain.Entity
 
         public BookingStatus Status { get; set; }
 
-        public Customer Customer { get; set; }
+        public User Customer { get; set; }
 
         public Villa villa { get; set; }
     }

@@ -19,6 +19,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<Program>());
 builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ITokenHandler,TockenHandler>();
 builder.Services.AddScoped<VillaService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -34,6 +35,7 @@ Options.TokenValidationParameters = new TokenValidationParameters
     IssuerSigningKey = new SymmetricSecurityKey(
         Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 });
+builder.Services.AddSingleton<IUserRepository, UserRepository>(); // since we use static repository we can not use AddScope
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

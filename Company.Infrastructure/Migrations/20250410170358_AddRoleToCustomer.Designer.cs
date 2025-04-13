@@ -4,6 +4,7 @@ using Company.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250410170358_AddRoleToCustomer")]
+    partial class AddRoleToCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace Company.Infrastructure.Migrations
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("Company.Domain.Entity.User", b =>
+            modelBuilder.Entity("Company.Domain.Entity.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +107,7 @@ namespace Company.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Company.Domain.Entity.Villa", b =>
@@ -141,24 +144,24 @@ namespace Company.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2025, 4, 10, 18, 6, 44, 467, DateTimeKind.Local).AddTicks(7546),
+                            CreateDate = new DateTime(2025, 4, 10, 18, 3, 58, 230, DateTimeKind.Local).AddTicks(9392),
                             Description = "It's me",
                             Name = "Aynaz",
-                            UpdateDate = new DateTime(2025, 4, 10, 17, 6, 44, 467, DateTimeKind.Utc).AddTicks(7540)
+                            UpdateDate = new DateTime(2025, 4, 10, 17, 3, 58, 230, DateTimeKind.Utc).AddTicks(9386)
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2025, 4, 10, 18, 6, 44, 467, DateTimeKind.Local).AddTicks(7612),
+                            CreateDate = new DateTime(2025, 4, 10, 18, 3, 58, 230, DateTimeKind.Local).AddTicks(9454),
                             Description = "It's my sister",
                             Name = "Elnaz",
-                            UpdateDate = new DateTime(2025, 4, 10, 17, 6, 44, 467, DateTimeKind.Utc).AddTicks(7610)
+                            UpdateDate = new DateTime(2025, 4, 10, 17, 3, 58, 230, DateTimeKind.Utc).AddTicks(9453)
                         });
                 });
 
             modelBuilder.Entity("Company.Domain.Entity.Booking", b =>
                 {
-                    b.HasOne("Company.Domain.Entity.User", "Customer")
+                    b.HasOne("Company.Domain.Entity.Customer", "Customer")
                         .WithMany("Bookings")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -175,7 +178,7 @@ namespace Company.Infrastructure.Migrations
                     b.Navigation("villa");
                 });
 
-            modelBuilder.Entity("Company.Domain.Entity.User", b =>
+            modelBuilder.Entity("Company.Domain.Entity.Customer", b =>
                 {
                     b.Navigation("Bookings");
                 });
