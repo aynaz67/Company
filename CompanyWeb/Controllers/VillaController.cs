@@ -2,15 +2,17 @@
 using Company.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Company.Application.Interface;
 
 namespace CompanyWeb.Controllers
 {
-    [Authorize]
+    
     public class VillaController : Controller
     {
-        private readonly VillaService _villaService;
+        private readonly IVillaService _villaService;
+       // private readonly IGenericService<VillaDto, CreateUpdateVillaDto> _villaService;
 
-        public VillaController(VillaService villaService)
+        public VillaController(IVillaService villaService)
         {
             _villaService = villaService;
         }
@@ -19,7 +21,6 @@ namespace CompanyWeb.Controllers
         {
             var villas = await _villaService.GetVillasAsync();
             return View(villas);
-
         }
 
         public async Task<IActionResult> Create()
@@ -54,6 +55,7 @@ namespace CompanyWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(VillaDto dto)
         {
+            int id = dto.Id;
             var result = await _villaService.UpdateVillasAsync(dto);
             if (result)
                 return RedirectToAction("Index");

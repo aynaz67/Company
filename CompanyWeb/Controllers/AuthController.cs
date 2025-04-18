@@ -2,33 +2,37 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Company.Application.DTOs;
-using Company.Application.Services.Interfaces;
 using Company.Infrastructure.Repositories;
+using Company.Application.Interface;
 
 namespace CompanyWeb.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ITokenHandler tokenHandler;
+        private readonly IUserService _userService;
 
-        public AuthController(IUserRepository userRepository, ITokenHandler tokenHandler)
+        public AuthController(IUserService userService)
         {
-            _userRepository = userRepository;
-            this.tokenHandler = tokenHandler;
+            _userService = userService;
+     
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginAsync(LoginRequestDto loginRequest)
+        public async Task<IActionResult> Login(LoginRequestDto loginRequest)
         {
-            var user = await _userRepository.AuthenticateAsync(
+            var user = await _userService.AuthenticateAsync(
                 loginRequest.UserName, loginRequest.Password);
 
             if (user != null)
             {
                 //Generate JWT
-                var token= await tokenHandler.CreateTokenAsync(user);
-                return Ok(token);
+           //     var token = await tokenHandler.CreateTokenAsync(user);
+                // return Ok(token);
+                return View("Index");
             }
 
             return BadRequest("username and password is incorect");

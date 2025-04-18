@@ -1,4 +1,4 @@
-﻿using Company.Application.Services.Interfaces;
+﻿using Company.Application.Interface;
 using Company.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,7 +55,6 @@ namespace Company.Infrastructure.Repositories
             _dbSet.Remove(entity);
             return Task.CompletedTask;
         }
-
 
         public async Task<int> SaveChangesAsync()
         {

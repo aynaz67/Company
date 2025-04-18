@@ -11,8 +11,8 @@ namespace Company.Application.Validations
     public class LoginRequestValidator:AbstractValidator<LoginRequestDto>
     {
         public LoginRequestValidator() { 
-            RuleFor(x=>x.UserName).NotEmpty();
-            RuleFor(x=>x.Password).NotEmpty();
+            //RuleFor(x=>x.UserName).NotEmpty();
+            //RuleFor(x=>x.Password).NotEmpty();
         }
     }
 }

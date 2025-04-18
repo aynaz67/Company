@@ -1,6 +1,5 @@
 using Company.Application.Mappings;
 using Company.Application.Services;
-using Company.Application.Services.Interfaces;
 using Company.Infrastructure.Data;
 using Company.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Company.Application.Interface;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<Program>());
 builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IVillaService,VillaService>();
 builder.Services.AddScoped<ITokenHandler,TockenHandler>();
-builder.Services.AddScoped<VillaService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(Options =>
@@ -46,26 +48,26 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        context.Response.StatusCode = 400;
-        context.Response.ContentType = "application/json";
+//app.UseExceptionHandler(errorApp =>
+//{
+//    errorApp.Run(async context =>
+//    {
+//        context.Response.StatusCode = 400;
+//        context.Response.ContentType = "application/json";
 
-        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+//        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
 
-        if (exceptionHandlerPathFeature?.Error is ValidationException validationException)
-        {
-            var errors = validationException.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
-            await context.Response.WriteAsJsonAsync(errors);
-        }
-        else
-        {
-            await context.Response.WriteAsync("An unexpected error occurred.");
-        }
-    });
-});
+//        if (exceptionHandlerPathFeature?.Error is ValidationException validationException)
+//        {
+//            var errors = validationException.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
+//            await context.Response.WriteAsJsonAsync(errors);
+//        }
+//        else
+//        {
+//            await context.Response.WriteAsync("An unexpected error occurred.");
+//        }
+//    });
+//});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
