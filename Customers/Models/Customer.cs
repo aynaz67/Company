@@ -10,12 +10,6 @@ namespace Customers.Models
     public class Customer : INotifyPropertyChanged
     {
         public int ID { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private string _name;
         public string Name
         {
@@ -95,6 +89,10 @@ namespace Customers.Models
             }
         }
 
-
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

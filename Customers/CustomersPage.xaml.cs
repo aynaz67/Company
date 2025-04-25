@@ -15,15 +15,17 @@ using System.Windows.Shapes;
 
 namespace Customers
 {
-    public partial class CustomerPage : Window
+    /// <summary>
+    /// Interaction logic for CustomersPage.xaml
+    /// </summary>
+    public partial class CustomersPage : Window
     {
-        public Customer _customer;
-
-        public CustomerPage()
+        public CustomersPage()
         {
             InitializeComponent();
-
         }
+        public Customer _customer { get; set; }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

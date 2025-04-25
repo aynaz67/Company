@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Loaded="Window_Loaded">
+        <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -20,12 +20,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="40,5,40,5" Name="btnAdd" Content="Add" FontSize="18" FontWeight="Bold" Click="btnAdd_Click"/>
-            <Button Margin="40,5,40,5" Name="btnUpdate" Content="Update" Grid.Column="1" FontSize="18" FontWeight="Bold" Click="btnUpdate_Click"/>
+            <Button Margin="40,5,40,5" Name="btnAdd" Command="{Binding AddCommand}" Content="Add" FontSize="18" FontWeight="Bold" />
+            <Button Margin="40,5,40,5" Name="btnUpdate"  Command="{Binding UpdateCommand}" Content="Update" Grid.Column="1" FontSize="18" FontWeight="Bold" />
 
 
         </Grid>
-        <DataGrid x:Name="gridCustomer" IsReadOnly="True" AutoGenerateColumns="False" SelectionUnit="FullRow">
+        <DataGrid x:Name="gridCustomer" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}"  IsReadOnly="True" AutoGenerateColumns="False" SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*" Visibility="Hidden"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
