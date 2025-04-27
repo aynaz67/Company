@@ -1,14 +1,21 @@
-﻿using System;
+﻿
+using Customers.Validation;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Customers.Models
 {
-    public class Customer : INotifyPropertyChanged
+    public class Customer : INotifyPropertyChanged,INotifyDataErrorInfo
     {
+        public Customer(){
+            PropertyChangedWithValidation += (propName, value) => ValidateProperty(propName, value);
+        }
         public int ID { get; set; }
         private string _name;
         public string Name
@@ -20,6 +27,7 @@ namespace Customers.Models
                 {
                     _name = value;
                     OnPropertyChanged(nameof(Name));
+                    PropertyChangedWithValidation?.Invoke(nameof(Name), value);
                 }
             }
         }
@@ -33,6 +41,7 @@ namespace Customers.Models
                 {
                     _age = value;
                     OnPropertyChanged(nameof(Age));
+                    PropertyChangedWithValidation?.Invoke(nameof(Age), value);
                 }
             }
         }
@@ -46,6 +55,7 @@ namespace Customers.Models
                 {
                     _postCode = value;
                     OnPropertyChanged(nameof(PostCode));
+                    PropertyChangedWithValidation?.Invoke(nameof(PostCode), value);
                 }
             }
         }
@@ -59,6 +69,7 @@ namespace Customers.Models
                 {
                     _height = value;
                     OnPropertyChanged(nameof(Height));
+                    PropertyChangedWithValidation?.Invoke(nameof(Height), value);
                 }
             }
         }
@@ -72,6 +83,7 @@ namespace Customers.Models
                 {
                     _width = value;
                     OnPropertyChanged(nameof(Width));
+                   
                 }
             }
         }
@@ -85,14 +97,43 @@ namespace Customers.Models
                 {
                     _length = value;
                     OnPropertyChanged(nameof(Length));
+                    PropertyChangedWithValidation?.Invoke(nameof(Length), value);
                 }
             }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+      
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public event Action<string, object>? PropertyChangedWithValidation;
+
+        // INotifyDataErrorInfo
+        private readonly Dictionary<string, List<string>> _errors = new();
+        public bool HasErrors => _errors.Count > 0;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            if (!string.IsNullOrEmpty(propertyName) && _errors.ContainsKey(propertyName))
+                return _errors[propertyName];
+            return null;
+        }
+        public void ValidateProperty(string propertyName, object value)
+        {
+            var errors = CustomerValidation.Validate(propertyName, value);
+
+            if (errors.Any())
+                _errors[propertyName] = errors;
+            else
+                _errors.Remove(propertyName);
+
+            OnErrorsChanged(propertyName);
+        }
+        private void OnErrorsChanged(string propertyName) =>
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
 }

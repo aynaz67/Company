@@ -8,11 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Customers.Validation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Customers.ViewModels
 {
-    public class CustomerViewModel : INotifyPropertyChanged
+    public class CustomerViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>();
 
@@ -24,6 +28,13 @@ namespace Customers.ViewModels
             {
                 _selectedCustomer = value;
                 OnPropertyChanged(nameof(SelectedCustomer));
+                _selectedCustomer.PropertyChangedWithValidation -= ValidateProperty;
+                _selectedCustomer.PropertyChangedWithValidation += ValidateProperty;
+
+                //ValidateProperty(nameof(SelectedCustomer.Name), _selectedCustomer.Name);
+                //ValidateProperty(nameof(SelectedCustomer.Age), _selectedCustomer.Age);
+                //ValidateProperty(nameof(SelectedCustomer.Height), _selectedCustomer.Height);
+                //ValidateProperty(nameof(SelectedCustomer.PostCode), _selectedCustomer.PostCode);
             }
         }
 
@@ -55,18 +66,18 @@ namespace Customers.ViewModels
         private void AddCustomer()
         {
             var dialog = new CustomersPage();
-            if (dialog.ShowDialog() == true && dialog._customer != null)
+            if (dialog.ShowDialog() == true && dialog.Customer != null)
             {
-                Customers.Add(dialog._customer);
+                Customers.Add(dialog.Customer);
             }
         }
 
         private void UpdateCustomer()
         {
-            var dialog = new CustomersPage { _customer = SelectedCustomer };
-            if (dialog.ShowDialog() == true && dialog._customer != null)
+            var dialog = new CustomersPage(SelectedCustomer);
+            if (dialog.ShowDialog() == true && dialog.Customer != null)
             {
-                var updated = dialog._customer;
+                var updated = dialog.Customer;
                 SelectedCustomer.Name = updated.Name;
                 SelectedCustomer.Age = updated.Age;
                 SelectedCustomer.Height = updated.Height;
@@ -76,6 +87,53 @@ namespace Customers.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+
+
+
+
+        //validation
+        private readonly Dictionary<string, List<string>> _errors = new();
+
+        public bool HasErrors => _errors.Any();
+
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            // return GetErrors(propertyName);
+            if (_errors.ContainsKey(propertyName))
+            {
+                return _errors[propertyName];
+            }
+            else
+            {
+                return Enumerable.Empty<string>();
+            }
+        }
+
+        //public IEnumerable<object> GetErrors(string? propertyName)
+        //{
+        //    if (string.IsNullOrEmpty(propertyName)) return Enumerable.Empty<object>();
+        //    return _errors.TryGetValue(propertyName, out var errors) ? errors : Enumerable.Empty<object>();
+        //}
+
+        public void ValidateProperty(string propertyName, object value)
+        {
+            var errors = CustomerValidation.Validate(propertyName, value);
+
+            if (errors.Any())
+                _errors[propertyName] = errors;
+            else
+                _errors.Remove(propertyName);
+
+            OnErrorsChanged(propertyName);
+        }
+
+        protected void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
 
     }
 }

@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:Customers"
         mc:Ignorable="d"
         Title="CustomersPage" Height="450" Width="800">
-    <Grid Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,15 +29,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Customer Name" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
-        <TextBox x:Name="txtCustomerName" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
-        <Label Content="Customer Age" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
-        <TextBox x:Name="txtCustomerAge" Grid.Row="1" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
+        <TextBox x:Name="txtCustomerName" Text="{Binding Customer.Name, UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"  ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
+        <Label Content="Customer Age"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
+        <TextBox x:Name="txtCustomerAge" Text="{Binding Customer.Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}" Grid.Row="1" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
         <Label Content="Customer PostCode" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
-        <TextBox x:Name="txtCustomerPostCode" Grid.Row="2" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
+        <TextBox x:Name="txtCustomerPostCode" Text="{Binding Customer.PostCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True }"   Grid.Row="2" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
         <Label Content="Customer Height" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" ></Label>
-        <TextBox x:Name="txtCustomerHeight" Grid.Row="3" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
-        <Button x:Name="btnSave" Content="save" Grid.Row="4" Width="100" Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSave_Click" ></Button>
-        <Button x:Name="btnCancel" Content="close" Grid.Column="1" Grid.Row="4" Width="100" Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnCancel_Click" ></Button>
+        <TextBox x:Name="txtCustomerHeight" Text="{Binding Customer.Height, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}" Grid.Row="3"  Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
+        <Button x:Name="btnSave" Command="{Binding SaveCommand}"  Content="save" Grid.Row="4" Width="100" Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"  ></Button>
+        <Button x:Name="btnCancel" Command="{Binding CancelCommand}"  Content="close" Grid.Column="1" Grid.Row="4" Width="100" Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"  ></Button>
 
     </Grid>
 </Window>
