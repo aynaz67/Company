@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Company.Application.Interface;
 
 namespace CompanyWeb.Controllers
-{
-    
+{ 
     public class VillaController : Controller
     {
         private readonly IVillaService _villaService;

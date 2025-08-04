@@ -25,5 +25,16 @@ namespace VillaPortal.Controllers
             }
             return Ok(villas);
         }
+
+        [HttpPatch]
+        [Route("{villaId:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int villaId)
+        {
+            var result = await _villaService.DeleteVillasAsync(villaId);
+            if (!result)
+                return NotFound("Villa not found");
+
+            return Ok(new { Message = "Villa is deleted successfully", VillaID = villaId});
+        }
     }
 }
