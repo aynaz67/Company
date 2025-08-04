@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.UnitTests", "Compan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customers", "Customers\Customers.csproj", "{67A37B51-B101-4198-83D0-E12649A34C30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VillaPortal", "VillaPortal\VillaPortal.csproj", "{DF15EBC8-FDFD-48D3-A91D-4347BA02EE6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{67A37B51-B101-4198-83D0-E12649A34C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67A37B51-B101-4198-83D0-E12649A34C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67A37B51-B101-4198-83D0-E12649A34C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF15EBC8-FDFD-48D3-A91D-4347BA02EE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF15EBC8-FDFD-48D3-A91D-4347BA02EE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF15EBC8-FDFD-48D3-A91D-4347BA02EE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF15EBC8-FDFD-48D3-A91D-4347BA02EE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
