@@ -1,6 +1,6 @@
 @VillaPortal_HostAddress = http://localhost:5002
 
-GET {{VillaPortal_HostAddress}}/weatherforecast/
+GET {{VillaPortal_HostAddress}}/Villa/
 Accept: application/json
 
 ###
