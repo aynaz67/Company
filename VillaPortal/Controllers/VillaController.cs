@@ -1,4 +1,5 @@
-﻿using Company.Application.Interface;
+﻿using Company.Application.DTOs;
+using Company.Application.Interface;
 using Company.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,15 @@ namespace VillaPortal.Controllers
                 return NotFound("Villa not found");
 
             return Ok(new { Message = "Villa is deleted successfully", VillaID = villaId});
+        }
+
+
+        [HttpPost]
+        
+        public async Task<IActionResult> Create(CreateUpdateVillaDto dto)
+        {
+            await _villaService.AddVillasAsync(dto);
+            return RedirectToAction("Index");
         }
     }
 }
